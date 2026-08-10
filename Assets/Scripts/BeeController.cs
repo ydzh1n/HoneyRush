@@ -16,14 +16,10 @@ public class BeeController : MonoBehaviour
     {
         Vector3 up = Planet.Instance.UpAt(transform.position);
 
-        // ввод: пока клавиатура, джойстик и гироскоп добавим следующим коммитом
-        float steer = 0f;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) steer -= 1f;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) steer += 1f;
-        currentSteer = Mathf.Lerp(currentSteer, steer, Time.fixedDeltaTime * steerSmooth);
+        currentSteer = Mathf.Lerp(currentSteer, InputProvider.Instance.Steer, Time.fixedDeltaTime * steerSmooth);
 
-        // плавный разгон до скорости бега
-        currentSpeed = Mathf.Lerp(currentSpeed, runSpeed, Time.fixedDeltaTime * accel);
+        float targetSpeed = runSpeed * (1f + 0.4f * InputProvider.Instance.Throttle);
+        currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * accel);
 
         // поворот вокруг нормали поверхности (рулежка)
         transform.Rotate(up, currentSteer * turnSpeed * Time.fixedDeltaTime, Space.World);
