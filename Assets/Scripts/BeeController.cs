@@ -7,6 +7,7 @@ public class BeeController : MonoBehaviour
     [SerializeField] private float accel = 3f;
     [SerializeField] private float turnSpeed = 140f;
     [SerializeField] private float steerSmooth = 10f;
+    [SerializeField] private float hoverHeight = 1.1f;
 
     private float currentSpeed;
     private float currentSteer;
@@ -32,7 +33,7 @@ public class BeeController : MonoBehaviour
         transform.position += forward * (currentSpeed * Time.fixedDeltaTime);
 
         // держим на поверхности и выравниваем «верх» по нормали
-        transform.position = Planet.Instance.SurfacePoint(transform.position);
+        transform.position = Planet.Instance.SurfacePoint(transform.position) + up * hoverHeight;
         transform.rotation = Quaternion.FromToRotation(transform.up, up) * transform.rotation;
     }
 }
