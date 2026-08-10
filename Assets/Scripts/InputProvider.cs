@@ -10,7 +10,29 @@ public class InputProvider : MonoBehaviour
     [SerializeField] private SimpleJoystick joystick;
     [SerializeField] private GameObject joystickCanvas;
 
-    private void Awake() => Instance = this;
+    [Header("Гироскоп")]
+    [SerializeField] private float gyroSensitivity = 2.5f;
+    [SerializeField] private bool gyroInvert = false;
+
+    private bool gyroAvailable;
+    private Quaternion gyroCalibration;
+
+    private void Awake()
+    {
+        Instance = this;
+        gyroAvailable = SystemInfo.supportsGyroscope;
+        if (gyroAvailable)
+        {
+            Input.gyro.enabled = true;
+            CalibrateGyro();
+        }
+    }
+
+    public void CalibrateGyro()
+    {
+        if (gyroAvailable)
+            gyroCalibration = Input.gyro.attitude;
+    }
 
     private void Update()
     {
@@ -35,7 +57,14 @@ public class InputProvider : MonoBehaviour
                 break;
 
             case ControlMode.Gyro:
-                // следующий коммит
+                if (gyroAvailable)
+                {
+                    Quaternion delta = Quaternion.Inverse(gyroCalibration) * Input.gyro.attitude;
+                    Vector3 tilt = delta * Vector3.forward;
+                    float s = tilt.x * gyroSensitivity;
+                    if (gyroInvert) s = -s;
+                    steer = Mathf.Clamp(s, -1f, 1f);
+                }
                 break;
         }
 

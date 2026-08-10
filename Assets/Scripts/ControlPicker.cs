@@ -36,6 +36,8 @@ public class ControlPicker : MonoBehaviour
     {
         ControlSettings.Current = mode;
         PlayerPrefs.Save();
+        if (mode == ControlMode.Gyro && InputProvider.Instance != null)
+            InputProvider.Instance.CalibrateGyro(); // точка нуля = поза в момент выбора
         Close();
     }
 
