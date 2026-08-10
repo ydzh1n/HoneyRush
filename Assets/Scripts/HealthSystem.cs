@@ -9,6 +9,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private LivesHUD hud;
 
     public int Lives { get; private set; }
+    public bool IsInvulnerable => Time.time < invulnerableUntil;
 
     private float invulnerableUntil;
 
@@ -23,19 +24,16 @@ public class HealthSystem : MonoBehaviour
     public void TakeHit()
     {
         if (GameFlow.GameOver) return;
-        if (Time.time < invulnerableUntil) return; // окно неуязвимости
+        if (IsInvulnerable) return;
 
         Lives--;
         hud.SetLives(Lives);
         invulnerableUntil = Time.time + invulnerability;
 
-        Debug.Log($"Удар! Осталось жизней: {Lives}");
-        // TODO следующий коммит: вспышка, замедление, реплика паука
+        if (HitFeedback.Instance != null)
+            HitFeedback.Instance.OnHit();
 
         if (Lives <= 0)
-        {
-            Debug.Log("Конец забега: поймана!");
             GameFlow.EndGame();
-        }
     }
 }
