@@ -12,15 +12,24 @@ public class ChainSpawner : MonoBehaviour
 
     private float distanceSinceLast;
     private Vector3 lastPos;
+    private bool spawnedFirst;
 
     private void Start()
     {
         lastPos = bee.position;
-        SpawnChain();
     }
+
 
     private void Update()
     {
+        if (!GameFlow.Started) return;
+
+        if (!spawnedFirst)
+        {
+            spawnedFirst = true;
+            SpawnChain();
+        }
+
         distanceSinceLast += Vector3.Distance(bee.position, lastPos);
         lastPos = bee.position;
         if (distanceSinceLast >= chainInterval)

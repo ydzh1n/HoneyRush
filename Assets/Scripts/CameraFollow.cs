@@ -13,10 +13,10 @@ public class CameraFollow : MonoBehaviour
         Vector3 back = -Vector3.ProjectOnPlane(target.forward, up).normalized;
         Vector3 desired = target.position + back * distance + up * height;
 
-        transform.position = Vector3.Lerp(transform.position, desired, Time.deltaTime * smooth);
+        transform.position = Vector3.Lerp(transform.position, desired, Time.unscaledDeltaTime * smooth);
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
             Quaternion.LookRotation(target.position - transform.position, up),
-            Time.deltaTime * smooth);
+            Time.unscaledDeltaTime * smooth);
     }
 }
