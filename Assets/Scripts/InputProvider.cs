@@ -4,9 +4,11 @@ public class InputProvider : MonoBehaviour
 {
     public static InputProvider Instance;
 
-
     public float Steer { get; private set; }
     public float Throttle { get; private set; }
+
+    [SerializeField] private SimpleJoystick joystick;
+    [SerializeField] private GameObject joystickCanvas;
 
     private void Awake() => Instance = this;
 
@@ -25,7 +27,11 @@ public class InputProvider : MonoBehaviour
                 break;
 
             case ControlMode.Joystick:
-                // следующий коммит
+                if (joystick != null)
+                {
+                    steer = joystick.AxisX;
+                    throttle = joystick.AxisY;
+                }
                 break;
 
             case ControlMode.Gyro:
@@ -36,13 +42,24 @@ public class InputProvider : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && ControlPicker.Instance != null)
             ControlPicker.Instance.Open();
 
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.F1))
+            PlayerPrefs.DeleteAll();
+#endif
+
+        UpdateJoystickVisibility();
+
         Steer = steer;
         Throttle = throttle;
+    }
 
-        #if UNITY_EDITOR
-                // дев-клавиша: сброс сохранения, чтобы гонять сценарий первого запуска
-                if (Input.GetKeyDown(KeyCode.F1))
-                    PlayerPrefs.DeleteAll();
-#endif
+    private void UpdateJoystickVisibility()
+    {
+        bool pickerOpen = ControlPicker.Instance != null && ControlPicker.Instance.gameObject.activeSelf;
+        bool need = GameFlow.Started
+                    && ControlSettings.Current == ControlMode.Joystick
+                    && !pickerOpen;
+        if (joystickCanvas.activeSelf != need)
+            joystickCanvas.SetActive(need);
     }
 }
