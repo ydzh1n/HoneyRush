@@ -28,6 +28,7 @@ public class NectarDrop : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+        if (ComboTracker.Instance != null) ComboTracker.Instance.RegisterPickup();
         ScoreManager.Instance.AddDrop();
         Destroy(gameObject);
         // TODO: искорки и звук сбора

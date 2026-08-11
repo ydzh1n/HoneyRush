@@ -29,6 +29,7 @@ public class HealthSystem : MonoBehaviour
         Lives--;
         hud.SetLives(Lives);
         invulnerableUntil = Time.time + invulnerability;
+        if (BuzzMeter.Instance != null) BuzzMeter.Instance.Spend();
 
         if (HitFeedback.Instance != null)
             HitFeedback.Instance.OnHit();
