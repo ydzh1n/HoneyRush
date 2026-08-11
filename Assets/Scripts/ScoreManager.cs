@@ -4,6 +4,7 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
+    public static event System.Action<int> OnDropCollected;
 
     [SerializeField] private TextMeshProUGUI counterText;
 
@@ -15,5 +16,6 @@ public class ScoreManager : MonoBehaviour
     {
         count++;
         counterText.text = count.ToString();
+        OnDropCollected?.Invoke(count);
     }
 }
