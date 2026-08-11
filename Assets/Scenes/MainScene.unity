@@ -1427,7 +1427,7 @@ GameObject:
   - component: {fileID: 806109038}
   - component: {fileID: 806109037}
   m_Layer: 0
-  m_Name: WebWallSpawner
+  m_Name: WebSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1446,16 +1446,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bee: {fileID: 36431049}
-  segmentPrefab: {fileID: 2690333088017722347, guid: 8aaecb0c38b20514ab00e93a5f850fff, type: 3}
   spider: {fileID: 784220984}
-  spawnAhead: 22
+  webPrefab: {fileID: 2690333088017722347, guid: 8aaecb0c38b20514ab00e93a5f850fff, type: 3}
   interval: 26
   rageInterval: 16
-  lateralRange: 6
-  segmentWidth: 2
-  gapWidth: 3.2
-  rageGapWidth: 2.4
-  weaveStep: 0.25
+  lifetime: 25
 --- !u!4 &806109038
 Transform:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3640226693942035771}
   - component: {fileID: 5924773798338094475}
   - component: {fileID: 8043296918592381371}
+  - component: {fileID: 2094724411937943849}
   m_Layer: 0
   m_Name: NectarDrop
   m_TagString: Untagged
@@ -125,3 +126,16 @@ MonoBehaviour:
   bobSpeed: 3
   spinSpeed: 120
   lifetime: 25
+--- !u!114 &2094724411937943849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5198192011150733549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 768893e2bc58d0a4eb3d83a6de6cac3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behindMargin: 5
