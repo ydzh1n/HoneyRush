@@ -85,9 +85,11 @@ public class InputProvider : MonoBehaviour
     private void UpdateJoystickVisibility()
     {
         bool pickerOpen = ControlPicker.Instance != null && ControlPicker.Instance.gameObject.activeSelf;
+        bool bonusOpen = BonusPicker.Instance != null && BonusPicker.Instance.gameObject.activeSelf;
         bool need = GameFlow.Started
                     && ControlSettings.Current == ControlMode.Joystick
-                    && !pickerOpen;
+                    && !pickerOpen
+                    && !bonusOpen;
         if (joystickCanvas.activeSelf != need)
             joystickCanvas.SetActive(need);
     }
