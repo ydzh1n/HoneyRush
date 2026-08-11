@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
@@ -11,7 +10,6 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] private float minGap = 3f;
     [SerializeField] private int attempts = 5;
 
-    private readonly List<Transform> alive = new List<Transform>();
     private float distance;
     private Vector3 lastPos;
 
@@ -19,7 +17,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (!GameFlow.Started) return;
+        if (!GameFlow.Started || GameFlow.GameOver) return;
 
         distance += Vector3.Distance(bee.position, lastPos);
         lastPos = bee.position;
@@ -33,8 +31,6 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void Spawn()
     {
-        alive.RemoveAll(t => t == null); // убираем уничтожЄнные (Destroy даЄт null)
-
         Vector3 up = Planet.Instance.UpAt(bee.position);
         Vector3 forward = Vector3.ProjectOnPlane(bee.forward, up).normalized;
         Vector3 right = Vector3.Cross(forward, up);
@@ -50,24 +46,14 @@ public class ObstacleSpawner : MonoBehaviour
                 pos += right * lateral;
                 pos = Planet.Instance.SurfacePoint(pos);
 
-                if (TooClose(pos)) continue; // зан€то Ч пробуем другой бок
+                // ѕровер€ем реестр: чтобы не спавнилось в других грибах (minGap) и не перекрывало капли (1.2f)
+                if (!SpawnRegistry.IsFree(pos, minGap, 1.2f)) continue;
 
                 var mushroom = Instantiate(mushroomPrefab, pos, Quaternion.identity);
                 mushroom.transform.rotation = Quaternion.FromToRotation(Vector3.up, Planet.Instance.UpAt(pos));
-                Destroy(mushroom, 30f);
-                alive.Add(mushroom.transform);
+                Destroy(mushroom, 30f); // оставл€ем как страховку
                 break;
             }
         }
-    }
-
-    private bool TooClose(Vector3 pos)
-    {
-        for (int i = 0; i < alive.Count; i++)
-        {
-            if (Vector3.Distance(alive[i].position, pos) < minGap)
-                return true;
-        }
-        return false;
     }
 }

@@ -52,6 +52,7 @@ public class ChainSpawner : MonoBehaviour
             pos = Planet.Instance.SurfacePoint(pos) + Planet.Instance.UpAt(pos) * 0.6f;
             pos += right * lateral;
             pos = Planet.Instance.SurfacePoint(pos) + Planet.Instance.UpAt(pos) * 0.6f;
+            if (!SpawnRegistry.IsFree(pos, 1f, 0f)) continue;
             Instantiate(dropPrefab, pos, Quaternion.identity);
         }
     }

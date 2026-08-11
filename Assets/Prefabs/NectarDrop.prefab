@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5924773798338094475}
   - component: {fileID: 8043296918592381371}
   - component: {fileID: 2094724411937943849}
+  - component: {fileID: 2213180535718919629}
   m_Layer: 0
   m_Name: NectarDrop
   m_TagString: Untagged
@@ -139,3 +140,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behindMargin: 5
+--- !u!114 &2213180535718919629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5198192011150733549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf3be837bb001548875ad3887fd4510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

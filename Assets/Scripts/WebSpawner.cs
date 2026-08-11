@@ -31,6 +31,7 @@ public class WebSpawner : MonoBehaviour
         Vector3 pos = Planet.Instance.SurfacePoint(src) + up * 0.05f;
 
         // заплатка лежит по нормали поверхности — на любой точке планеты
+        if (!SpawnRegistry.IsFree(pos, 2f, 1.2f)) return;
         var web = Instantiate(webPrefab, pos, Quaternion.FromToRotation(Vector3.up, up));
         Destroy(web, lifetime);
     }
