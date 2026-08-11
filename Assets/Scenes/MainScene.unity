@@ -829,7 +829,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 100, y: -49}
+  m_AnchoredPosition: {x: 100, y: -52}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &269758095
@@ -1446,12 +1446,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bee: {fileID: 36431049}
-  segmentPrefab: {fileID: 7095107953623990010, guid: 8aaecb0c38b20514ab00e93a5f850fff, type: 3}
-  spawnAhead: 30
+  segmentPrefab: {fileID: 2690333088017722347, guid: 8aaecb0c38b20514ab00e93a5f850fff, type: 3}
+  spider: {fileID: 784220984}
+  spawnAhead: 22
   interval: 26
+  rageInterval: 16
   lateralRange: 6
   segmentWidth: 2
   gapWidth: 3.2
+  rageGapWidth: 2.4
+  weaveStep: 0.25
 --- !u!4 &806109038
 Transform:
   m_ObjectHideFlags: 0
