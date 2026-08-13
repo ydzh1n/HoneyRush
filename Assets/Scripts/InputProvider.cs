@@ -68,8 +68,11 @@ public class InputProvider : MonoBehaviour
                 break;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && ControlPicker.Instance != null)
-            ControlPicker.Instance.Open();
+        if (Input.GetKeyDown(KeyCode.Escape) && PauseUI.Instance != null)
+        {
+            if (PauseUI.Instance.IsOpen) PauseUI.Instance.Resume();
+            else PauseUI.Instance.Pause();
+        }
 
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.F1))

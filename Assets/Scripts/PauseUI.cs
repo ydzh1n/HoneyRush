@@ -19,6 +19,8 @@ public class PauseUI : MonoBehaviour
     public void Pause()
     {
         if (!GameFlow.Started || GameFlow.GameOver) return;
+        if (ControlPicker.Instance != null && ControlPicker.Instance.gameObject.activeSelf) return;
+        if (BonusPicker.Instance != null && BonusPicker.Instance.gameObject.activeSelf) return;
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
     }
