@@ -23,7 +23,12 @@ public class SpiderCompanion : MonoBehaviour
         Vector3 toBee = bee.position - transform.position;
         Vector3 dir = Vector3.ProjectOnPlane(toBee, up).normalized;
 
-        float speed = Rage ? rageSpeed : calmSpeed;
+        // Безопасное получение множителя: если менеджера нет, считаем его равным 1
+        float baseSpeed = Rage ? rageSpeed : calmSpeed;
+        float multiplier = DifficultyScaler.Instance != null ? DifficultyScaler.Instance.Multiplier : 1f;
+        float speed = baseSpeed * multiplier;
+
+        // Если паук оглушён после удара, он не двигается, независимо от сложности
         if (Time.time < calmUntil) speed = 0f;
 
         transform.position += dir * (speed * Time.deltaTime);

@@ -3907,6 +3907,7 @@ GameObject:
   - component: {fileID: 855842460}
   - component: {fileID: 855842461}
   - component: {fileID: 855842462}
+  - component: {fileID: 855842463}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -4080,6 +4081,21 @@ MonoBehaviour:
   pauseButton: {fileID: 1088352034}
   pausePanel: {fileID: 1029682177}
   menuButton: {fileID: 1627748169}
+--- !u!114 &855842463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855842451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d562f3590990a71488c8b38d0b10c670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timePerLevel: 15
+  multiplierStep: 0.15
+  maxMultiplier: 2
 --- !u!1 &864032248
 GameObject:
   m_ObjectHideFlags: 0

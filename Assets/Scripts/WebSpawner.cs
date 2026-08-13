@@ -16,8 +16,12 @@ public class WebSpawner : MonoBehaviour
         if (!GameFlow.Started || GameFlow.GameOver) return;
 
         timer += Time.deltaTime;
-        float current = spider != null && spider.Rage ? rageInterval : interval;
-        if (timer >= current)
+
+        // Базовый интервал, разделённый на множитель сложности
+        float baseInterval = (spider != null && spider.Rage) ? rageInterval : interval;
+        float currentInterval = baseInterval / DifficultyScaler.Instance.Multiplier;
+
+        if (timer >= currentInterval)
         {
             timer = 0f;
             DropWeb();
