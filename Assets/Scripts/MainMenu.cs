@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+    [SerializeField] private GameObject hudRoot;
 
     private void Awake()
     {
@@ -18,8 +19,8 @@ public class MainMenu : MonoBehaviour
             return;
         }
 
-        // морозим мир ПЕРВЫМ, чтобы никакая ошибка не оставила игру живой за меню
         Time.timeScale = 0f;
+        if (hudRoot != null) hudRoot.SetActive(false); // до старта HUD не существует
 
         musicSlider.minValue = 0f;
         musicSlider.maxValue = 1f;
@@ -28,7 +29,6 @@ public class MainMenu : MonoBehaviour
         musicSlider.SetValueWithoutNotify(Mathf.Clamp01(PlayerPrefs.GetFloat("MusicVol", 0.5f)));
         sfxSlider.SetValueWithoutNotify(Mathf.Clamp01(PlayerPrefs.GetFloat("SfxVol", 0.8f)));
 
-        // ленивое обращение: AudioManager может ещё не проснуться
         musicSlider.onValueChanged.AddListener(v => { if (AudioManager.Instance != null) AudioManager.Instance.SetMusicVolume(v); });
         sfxSlider.onValueChanged.AddListener(v => { if (AudioManager.Instance != null) AudioManager.Instance.SetSfxVolume(v); });
     }
@@ -36,6 +36,7 @@ public class MainMenu : MonoBehaviour
     private void OnStart()
     {
         gameObject.SetActive(false);
+        if (hudRoot != null) hudRoot.SetActive(true);
         if (!ControlSettings.HasChosen && ControlPicker.Instance != null)
         {
             ControlPicker.Instance.Open();
