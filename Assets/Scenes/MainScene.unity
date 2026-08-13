@@ -3142,8 +3142,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 1160310221}
   joystickCanvas: {fileID: 1351913412}
-  gyroSensitivity: 2.5
-  gyroInvert: 0
+  gyroSensitivity: 0.05
+  gyroInvert: 1
+  gyroDeadzone: 3
+  gyroRecenter: 2
 --- !u!4 &674539384
 Transform:
   m_ObjectHideFlags: 0
@@ -5322,8 +5324,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -65}
+  m_SizeDelta: {x: 0, y: -130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1160310219
 MonoBehaviour:

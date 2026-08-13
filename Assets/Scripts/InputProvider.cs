@@ -11,11 +11,14 @@ public class InputProvider : MonoBehaviour
     [SerializeField] private GameObject joystickCanvas;
 
     [Header("Гироскоп")]
-    [SerializeField] private float gyroSensitivity = 2.5f;
+    // Чувствительность теперь маленькая: 0.05 означает, что наклон на 20 градусов = полный поворот (20 * 0.05 = 1)
+    [SerializeField] private float gyroSensitivity = 0.05f;
     [SerializeField] private bool gyroInvert = false;
+    [SerializeField] private float gyroDeadzone = 3f;      // Мёртвая зона в градусах (не реагируем на дрожь рук)
+    [SerializeField] private float gyroRecenter = 2f;      // Скорость компенсации дрейфа (градусов в секунду)
 
     private bool gyroAvailable;
-    private Quaternion gyroCalibration;
+    private float currentGyroZero; // Динамический "ноль" для компенсации дрейфа
 
     private void Awake()
     {
@@ -31,7 +34,11 @@ public class InputProvider : MonoBehaviour
     public void CalibrateGyro()
     {
         if (gyroAvailable)
-            gyroCalibration = Input.gyro.attitude;
+        {
+            float z = Input.gyro.attitude.eulerAngles.z;
+            if (z > 180f) z -= 360f; // Нормализуем в диапазон -180..180
+            currentGyroZero = z;
+        }
     }
 
     private void Update()
@@ -59,11 +66,24 @@ public class InputProvider : MonoBehaviour
             case ControlMode.Gyro:
                 if (gyroAvailable)
                 {
-                    Quaternion delta = Quaternion.Inverse(gyroCalibration) * Input.gyro.attitude;
-                    Vector3 tilt = delta * Vector3.forward;
-                    float s = tilt.x * gyroSensitivity;
-                    if (gyroInvert) s = -s;
-                    steer = Mathf.Clamp(s, -1f, 1f);
+                    float z = Input.gyro.attitude.eulerAngles.z;
+                    if (z > 180f) z -= 360f; // Нормализуем в -180..180
+
+                    float delta = z - currentGyroZero;
+
+                    if (Mathf.Abs(delta) <= gyroDeadzone)
+                    {
+                        // Держим ровно: руль в нуле, а "ноль" медленно подтягивается к реальному углу, убирая дрейф
+                        currentGyroZero = Mathf.MoveTowards(currentGyroZero, z, gyroRecenter * Time.unscaledDeltaTime);
+                        steer = 0f;
+                    }
+                    else
+                    {
+                        // Осознанный наклон: вычитаем мёртвую зону, чтобы не было рывка на границе
+                        float s = (delta - Mathf.Sign(delta) * gyroDeadzone) * gyroSensitivity;
+                        if (gyroInvert) s = -s; // Если телефон инвертирует оси, эта галочка всё исправит
+                        steer = Mathf.Clamp(s, -1f, 1f);
+                    }
                 }
                 break;
         }
