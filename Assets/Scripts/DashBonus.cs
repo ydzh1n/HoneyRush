@@ -20,6 +20,7 @@ public class DashBonus : MonoBehaviour
     private IEnumerator Run()
     {
         DashState.Start();
+        if (AudioManager.Instance != null) AudioManager.Instance.Dash();
         if (dashIcon != null) dashIcon.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(duration);

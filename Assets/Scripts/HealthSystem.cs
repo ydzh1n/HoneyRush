@@ -25,6 +25,7 @@ public class HealthSystem : MonoBehaviour
     {
         if (GameFlow.GameOver) return;
         if (IsInvulnerable) return;
+        if (AudioManager.Instance != null) AudioManager.Instance.Hit();
 
         if (ShieldState.Active)
         {
