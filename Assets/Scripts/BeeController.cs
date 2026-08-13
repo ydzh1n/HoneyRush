@@ -19,6 +19,7 @@ public class BeeController : MonoBehaviour
         currentSteer = Mathf.Lerp(currentSteer, InputProvider.Instance.Steer, Time.fixedDeltaTime * steerSmooth);
 
         float targetSpeed = runSpeed * (1f + 0.4f * InputProvider.Instance.Throttle);
+        if (DashState.Active) targetSpeed *= DashState.Multiplier; // рывок поверх газа
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * accel);
 
         // поворот вокруг нормали поверхности (рулежка)
