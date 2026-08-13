@@ -86,10 +86,13 @@ public class InputProvider : MonoBehaviour
     {
         bool pickerOpen = ControlPicker.Instance != null && ControlPicker.Instance.gameObject.activeSelf;
         bool bonusOpen = BonusPicker.Instance != null && BonusPicker.Instance.gameObject.activeSelf;
+        bool pauseOpen = PauseUI.Instance != null && PauseUI.Instance.IsOpen;
         bool need = GameFlow.Started
+                    && !GameFlow.GameOver
                     && ControlSettings.Current == ControlMode.Joystick
                     && !pickerOpen
-                    && !bonusOpen;
+                    && !bonusOpen
+                    && !pauseOpen;
         if (joystickCanvas.activeSelf != need)
             joystickCanvas.SetActive(need);
     }

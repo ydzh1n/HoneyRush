@@ -34,13 +34,5 @@ public class ResultsUI : MonoBehaviour
         panel.SetActive(true);
     }
 
-    private void Restart()
-    {
-        Time.timeScale = 1f;
-        GameFlow.ResetGame();
-        MagnetState.Reset();
-        ShieldState.Reset();
-        DashState.Reset();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    private void Restart() => GameRestart.Run();
 }

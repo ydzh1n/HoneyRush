@@ -1,0 +1,39 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PauseUI : MonoBehaviour
+{
+    public static PauseUI Instance;
+
+    [SerializeField] private Button pauseButton;
+    [SerializeField] private GameObject pausePanel;
+
+    public bool IsOpen => pausePanel != null && pausePanel.activeSelf;
+
+    private void Awake()
+    {
+        Instance = this;
+        pauseButton.onClick.AddListener(Pause);
+    }
+
+    public void Pause()
+    {
+        if (!GameFlow.Started || GameFlow.GameOver) return;
+        pausePanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void Resume()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void Restart() => GameRestart.Run();
+
+    public void OpenControls()
+    {
+        pausePanel.SetActive(false);
+        if (ControlPicker.Instance != null) ControlPicker.Instance.Open();
+    }
+}
