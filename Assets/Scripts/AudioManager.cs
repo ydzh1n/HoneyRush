@@ -13,16 +13,26 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
-        DontDestroyOnLoad(gameObject); // музыка живёт между забегами
+        DontDestroyOnLoad(gameObject);
+        musicSource.volume = PlayerPrefs.GetFloat("MusicVol", 0.5f);
+        sfxSource.volume = PlayerPrefs.GetFloat("SfxVol", 0.8f);
         musicSource.loop = true;
         musicSource.Play();
+    }
+    public void SetMusicVolume(float v)
+    {
+        musicSource.volume = v;
+        PlayerPrefs.SetFloat("MusicVol", v);
+        PlayerPrefs.Save();
+    }
+
+    public void SetSfxVolume(float v)
+    {
+        sfxSource.volume = v;
+        PlayerPrefs.SetFloat("SfxVol", v);
+        PlayerPrefs.Save();
     }
 
     private void OnEnable() => BuzzMeter.OnBuzzReady += BuzzReady;

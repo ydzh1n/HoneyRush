@@ -4,7 +4,7 @@ public static class GameFlow
 {
     public static bool Started { get; private set; }
     public static bool GameOver { get; private set; }
-
+    public static bool FromRestart;
     public static event System.Action OnGameEnded;
 
     public static void StartGame() => Started = true;

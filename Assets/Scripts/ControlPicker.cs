@@ -12,18 +12,11 @@ public class ControlPicker : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
-        if (!SystemInfo.supportsGyroscope)
-            gyroButton.gameObject.SetActive(false);
-
         keyboardButton.onClick.AddListener(() => Pick(ControlMode.Keyboard));
         joystickButton.onClick.AddListener(() => Pick(ControlMode.Joystick));
         gyroButton.onClick.AddListener(() => Pick(ControlMode.Gyro));
 
-        if (ControlSettings.HasChosen)
-            Close();
-        else
-            Open();
+        gameObject.SetActive(false); // ждём вызова Open из меню или Escape
     }
 
     public void Open()

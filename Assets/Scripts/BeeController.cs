@@ -14,6 +14,7 @@ public class BeeController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameFlow.Started || GameFlow.GameOver) return;
         Vector3 up = Planet.Instance.UpAt(transform.position);
 
         currentSteer = Mathf.Lerp(currentSteer, InputProvider.Instance.Steer, Time.fixedDeltaTime * steerSmooth);
