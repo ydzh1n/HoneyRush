@@ -3461,7 +3461,7 @@ MonoBehaviour:
   calmSpeed: 4.5
   rageSpeed: 5.5
   catchDistance: 1.3
-  knockBack: 2
+  knockBack: 4
   hoverHeight: 0
 --- !u!23 &784220985
 MeshRenderer:
@@ -3868,7 +3868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b9f118c0d21c2458f2d73a9adde076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTimeout: 1.2
+  comboTimeout: 2
   maxCombo: 10
 --- !u!114 &855842458
 MonoBehaviour:
