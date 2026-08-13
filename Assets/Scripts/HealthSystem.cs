@@ -26,13 +26,19 @@ public class HealthSystem : MonoBehaviour
         if (GameFlow.GameOver) return;
         if (IsInvulnerable) return;
 
+        if (ShieldState.Active)
+        {
+            ShieldState.Consume(); // щит сгорел, жизнь цела
+            invulnerableUntil = Time.time + invulnerability;
+            if (HitFeedback.Instance != null) HitFeedback.Instance.OnHit();
+            return;
+        }
+
         Lives--;
         hud.SetLives(Lives);
         invulnerableUntil = Time.time + invulnerability;
-        if (BuzzMeter.Instance != null) BuzzMeter.Instance.Spend();
 
-        if (HitFeedback.Instance != null)
-            HitFeedback.Instance.OnHit();
+        if (HitFeedback.Instance != null) HitFeedback.Instance.OnHit();
 
         if (Lives <= 0)
             GameFlow.EndGame();
