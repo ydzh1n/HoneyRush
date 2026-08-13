@@ -1,4 +1,4 @@
-public static class ShieldState
+﻿public static class ShieldState
 {
     public static bool Active { get; private set; }
     public static event System.Action<bool> OnChanged;

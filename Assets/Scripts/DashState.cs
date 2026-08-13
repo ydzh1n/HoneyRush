@@ -1,4 +1,4 @@
-public static class DashState
+﻿public static class DashState
 {
     public static bool Active { get; private set; }
     public static float Multiplier = 1.8f;

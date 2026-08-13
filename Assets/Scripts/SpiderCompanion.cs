@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class SpiderCompanion : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class SpiderCompanion : MonoBehaviour
     [SerializeField] private float rageSpeed = 8f;
     [SerializeField] private float catchDistance = 1.2f;
     [SerializeField] private float knockBack = 10f;
-    [SerializeField] private float hoverHeight = 0f; // паук бежит по земле, а не летит
+    [SerializeField] private float hoverHeight = 0f; // РїР°СѓРє Р±РµР¶РёС‚ РїРѕ Р·РµРјР»Рµ, Р° РЅРµ Р»РµС‚РёС‚
 
     public bool Rage { get; private set; }
 
@@ -28,14 +28,14 @@ public class SpiderCompanion : MonoBehaviour
 
         transform.position += dir * (speed * Time.deltaTime);
 
-        // ноги на траве: без hover и покачиваний, позиция постоянная
+        // РЅРѕРіРё РЅР° С‚СЂР°РІРµ: Р±РµР· hover Рё РїРѕРєР°С‡РёРІР°РЅРёР№, РїРѕР·РёС†РёСЏ РїРѕСЃС‚РѕСЏРЅРЅР°СЏ
         transform.position = Planet.Instance.SurfacePoint(transform.position)
             + Planet.Instance.UpAt(transform.position) * hoverHeight;
 
         if (toBee.sqrMagnitude > 0.01f)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(toBee, up), Time.deltaTime * 6f);
 
-        // ловим по горизонтали: пчела летит выше, вертикаль не входит в радиус
+        // Р»РѕРІРёРј РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё: РїС‡РµР»Р° Р»РµС‚РёС‚ РІС‹С€Рµ, РІРµСЂС‚РёРєР°Р»СЊ РЅРµ РІС…РѕРґРёС‚ РІ СЂР°РґРёСѓСЃ
         float horizontal = Vector3.ProjectOnPlane(toBee, up).magnitude;
         if (horizontal < catchDistance && Time.time >= calmUntil)
             Catch();

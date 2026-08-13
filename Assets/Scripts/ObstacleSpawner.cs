@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
@@ -46,12 +46,12 @@ public class ObstacleSpawner : MonoBehaviour
                 pos += right * lateral;
                 pos = Planet.Instance.SurfacePoint(pos);
 
-                // Проверяем реестр: чтобы не спавнилось в других грибах (minGap) и не перекрывало капли (1.2f)
+                // РџСЂРѕРІРµСЂСЏРµРј СЂРµРµСЃС‚СЂ: С‡С‚РѕР±С‹ РЅРµ СЃРїР°РІРЅРёР»РѕСЃСЊ РІ РґСЂСѓРіРёС… РіСЂРёР±Р°С… (minGap) Рё РЅРµ РїРµСЂРµРєСЂС‹РІР°Р»Рѕ РєР°РїР»Рё (1.2f)
                 if (!SpawnRegistry.IsFree(pos, minGap, 1.2f)) continue;
 
                 var mushroom = Instantiate(mushroomPrefab, pos, Quaternion.identity);
                 mushroom.transform.rotation = Quaternion.FromToRotation(Vector3.up, Planet.Instance.UpAt(pos));
-                Destroy(mushroom, 30f); // оставляем как страховку
+                Destroy(mushroom, 30f); // РѕСЃС‚Р°РІР»СЏРµРј РєР°Рє СЃС‚СЂР°С…РѕРІРєСѓ
                 break;
             }
         }

@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -29,7 +29,7 @@ public class HealthSystem : MonoBehaviour
 
         if (ShieldState.Active)
         {
-            ShieldState.Consume(); // щит сгорел, жизнь цела
+            ShieldState.Consume(); // С‰РёС‚ СЃРіРѕСЂРµР», Р¶РёР·РЅСЊ С†РµР»Р°
             invulnerableUntil = Time.time + invulnerability;
             if (HitFeedback.Instance != null) HitFeedback.Instance.OnHit();
             return;

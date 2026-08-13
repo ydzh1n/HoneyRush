@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class HitFeedback : MonoBehaviour
@@ -27,7 +27,7 @@ public class HitFeedback : MonoBehaviour
 
     private void Update()
     {
-        // âñïûøêà ãàñíåò â ðåàëüíîì âðåìåíè, äàæå ïîêà ìèð çàìåäëåí
+        // Ð²ÑÐ¿Ñ‹ÑˆÐºÐ° Ð³Ð°ÑÐ½ÐµÑ‚ Ð² Ñ€ÐµÐ°Ð»ÑŒÐ½Ð¾Ð¼ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸, Ð´Ð°Ð¶Ðµ Ð¿Ð¾ÐºÐ° Ð¼Ð¸Ñ€ Ð·Ð°Ð¼ÐµÐ´Ð»ÐµÐ½
         Color c = flashImage.color;
         if (c.a > 0f)
         {
@@ -38,7 +38,7 @@ public class HitFeedback : MonoBehaviour
         if (slowMoLeft > 0f)
         {
             slowMoLeft -= Time.unscaledDeltaTime;
-            if (slowMoLeft <= 0f && !GameFlow.GameOver) // íå áóäèì çàìîðîæåííûé êîíåö çàáåãà
+            if (slowMoLeft <= 0f && !GameFlow.GameOver) // Ð½Ðµ Ð±ÑƒÐ´Ð¸Ð¼ Ð·Ð°Ð¼Ð¾Ñ€Ð¾Ð¶ÐµÐ½Ð½Ñ‹Ð¹ ÐºÐ¾Ð½ÐµÑ† Ð·Ð°Ð±ÐµÐ³Ð°
                 Time.timeScale = 1f;
         }
     }

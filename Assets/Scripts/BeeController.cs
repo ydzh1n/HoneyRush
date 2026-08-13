@@ -1,8 +1,8 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class BeeController : MonoBehaviour
 {
-    [Header("Бег")]
+    [Header("Р‘РµРі")]
     [SerializeField] private float runSpeed = 6f;
     [SerializeField] private float accel = 3f;
     [SerializeField] private float turnSpeed = 140f;
@@ -20,17 +20,17 @@ public class BeeController : MonoBehaviour
         currentSteer = Mathf.Lerp(currentSteer, InputProvider.Instance.Steer, Time.fixedDeltaTime * steerSmooth);
 
         float targetSpeed = runSpeed * (1f + 0.4f * InputProvider.Instance.Throttle);
-        if (DashState.Active) targetSpeed *= DashState.Multiplier; // рывок поверх газа
+        if (DashState.Active) targetSpeed *= DashState.Multiplier; // СЂС‹РІРѕРє РїРѕРІРµСЂС… РіР°Р·Р°
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * accel);
 
-        // поворот вокруг нормали поверхности (рулежка)
+        // РїРѕРІРѕСЂРѕС‚ РІРѕРєСЂСѓРі РЅРѕСЂРјР°Р»Рё РїРѕРІРµСЂС…РЅРѕСЃС‚Рё (СЂСѓР»РµР¶РєР°)
         transform.Rotate(up, currentSteer * turnSpeed * Time.fixedDeltaTime, Space.World);
 
-        // бег по касательной к сфере
+        // Р±РµРі РїРѕ РєР°СЃР°С‚РµР»СЊРЅРѕР№ Рє СЃС„РµСЂРµ
         Vector3 forward = Vector3.ProjectOnPlane(transform.forward, up).normalized;
         transform.position += forward * (currentSpeed * Time.fixedDeltaTime);
 
-        // держим на поверхности и выравниваем «верх» по нормали
+        // РґРµСЂР¶РёРј РЅР° РїРѕРІРµСЂС…РЅРѕСЃС‚Рё Рё РІС‹СЂР°РІРЅРёРІР°РµРј В«РІРµСЂС…В» РїРѕ РЅРѕСЂРјР°Р»Рё
         transform.position = Planet.Instance.SurfacePoint(transform.position) + up * hoverHeight;
         transform.rotation = Quaternion.FromToRotation(transform.up, up) * transform.rotation;
     }

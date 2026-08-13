@@ -1,9 +1,9 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.UI;
 
 public class LivesHUD : MonoBehaviour
 {
-    [SerializeField] private Image[] petals; // три, слева направо
+    [SerializeField] private Image[] petals; // С‚СЂРё, СЃР»РµРІР° РЅР°РїСЂР°РІРѕ
 
     private Color[] baseColors;
 
@@ -19,7 +19,7 @@ public class LivesHUD : MonoBehaviour
         for (int i = 0; i < petals.Length; i++)
         {
             Color c = baseColors[i];
-            c.a = i < lives ? 1f : 0.15f; // потерянный лепесток гаснет, но не ломает раскладку
+            c.a = i < lives ? 1f : 0.15f; // РїРѕС‚РµСЂСЏРЅРЅС‹Р№ Р»РµРїРµСЃС‚РѕРє РіР°СЃРЅРµС‚, РЅРѕ РЅРµ Р»РѕРјР°РµС‚ СЂР°СЃРєР»Р°РґРєСѓ
             petals[i].color = c;
         }
     }

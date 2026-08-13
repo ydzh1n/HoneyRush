@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.UI;
 
 public class ControlPicker : MonoBehaviour
@@ -16,13 +16,13 @@ public class ControlPicker : MonoBehaviour
         joystickButton.onClick.AddListener(() => Pick(ControlMode.Joystick));
         gyroButton.onClick.AddListener(() => Pick(ControlMode.Gyro));
 
-        gameObject.SetActive(false); // ждём вызова Open из меню или Escape
+        gameObject.SetActive(false); // Р¶РґС‘Рј РІС‹Р·РѕРІР° Open РёР· РјРµРЅСЋ РёР»Рё Escape
     }
 
     public void Open()
     {
         gameObject.SetActive(true);
-        Time.timeScale = 0f; // мир замирает, пока игрок выбирает
+        Time.timeScale = 0f; // РјРёСЂ Р·Р°РјРёСЂР°РµС‚, РїРѕРєР° РёРіСЂРѕРє РІС‹Р±РёСЂР°РµС‚
     }
 
     private void Pick(ControlMode mode)
@@ -30,7 +30,7 @@ public class ControlPicker : MonoBehaviour
         ControlSettings.Current = mode;
         PlayerPrefs.Save();
         if (mode == ControlMode.Gyro && InputProvider.Instance != null)
-            InputProvider.Instance.CalibrateGyro(); // точка нуля = поза в момент выбора
+            InputProvider.Instance.CalibrateGyro(); // С‚РѕС‡РєР° РЅСѓР»СЏ = РїРѕР·Р° РІ РјРѕРјРµРЅС‚ РІС‹Р±РѕСЂР°
         Close();
     }
 

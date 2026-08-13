@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
 
         Time.timeScale = 0f;
         if (hudRoot != null) hudRoot.SetActive(false);
-        if (bestText != null) bestText.text = $"Ðåêîðä: {PlayerPrefs.GetInt("BestScore", 0)}";
+        if (bestText != null) bestText.text = $"Ð ÐµÐºÐ¾Ñ€Ð´: {PlayerPrefs.GetInt("BestScore", 0)}";
 
         musicSlider.minValue = 0f;
         musicSlider.maxValue = 1f;

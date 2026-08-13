@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class DecorSpawner : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class DecorSpawner : MonoBehaviour
 
             var item = Instantiate(prefab, pos, rot, decorRoot);
             item.transform.localScale *= Random.Range(scaleMin, scaleMax);
-            item.isStatic = true; // подсказка юнити батчить статику
+            item.isStatic = true; // РїРѕРґСЃРєР°Р·РєР° СЋРЅРёС‚Рё Р±Р°С‚С‡РёС‚СЊ СЃС‚Р°С‚РёРєСѓ
         }
     }
 }

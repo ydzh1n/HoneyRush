@@ -1,15 +1,15 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.SceneManagement;
 
 public static class GameRestart
 {
-    public static void Run() // сразу в забег
+    public static void Run() // СЃСЂР°Р·Сѓ РІ Р·Р°Р±РµРі
     {
         GameFlow.FromRestart = true;
         ToMenu();
     }
 
-    public static void ToMenu() // чистая загрузка сцены — меню покажется само
+    public static void ToMenu() // С‡РёСЃС‚Р°СЏ Р·Р°РіСЂСѓР·РєР° СЃС†РµРЅС‹ вЂ” РјРµРЅСЋ РїРѕРєР°Р¶РµС‚СЃСЏ СЃР°РјРѕ
     {
         Time.timeScale = 1f;
         GameFlow.ResetGame();

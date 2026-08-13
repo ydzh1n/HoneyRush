@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class WebSpawner : MonoBehaviour
 {
@@ -30,7 +30,7 @@ public class WebSpawner : MonoBehaviour
         Vector3 up = Planet.Instance.UpAt(src);
         Vector3 pos = Planet.Instance.SurfacePoint(src) + up * 0.05f;
 
-        // заплатка лежит по нормали поверхности — на любой точке планеты
+        // Р·Р°РїР»Р°С‚РєР° Р»РµР¶РёС‚ РїРѕ РЅРѕСЂРјР°Р»Рё РїРѕРІРµСЂС…РЅРѕСЃС‚Рё вЂ” РЅР° Р»СЋР±РѕР№ С‚РѕС‡РєРµ РїР»Р°РЅРµС‚С‹
         if (!SpawnRegistry.IsFree(pos, 2f, 1.2f)) return;
         var web = Instantiate(webPrefab, pos, Quaternion.FromToRotation(Vector3.up, up));
         Destroy(web, lifetime);

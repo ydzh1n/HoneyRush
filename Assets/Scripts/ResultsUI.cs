@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
@@ -34,8 +34,8 @@ public class ResultsUI : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        scoreText.text = $"Нектар: {score}";
-        bestText.text = $"Рекорд: {best}";
+        scoreText.text = $"РќРµРєС‚Р°СЂ: {score}";
+        bestText.text = $"Р РµРєРѕСЂРґ: {best}";
         panel.SetActive(true);
     }
 

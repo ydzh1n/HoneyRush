@@ -1,4 +1,4 @@
-public static class MagnetState
+﻿public static class MagnetState
 {
     public static bool Active { get; private set; }
     public static float Radius = 6f;

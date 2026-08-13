@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum ControlMode { Keyboard, Joystick, Gyro }
 

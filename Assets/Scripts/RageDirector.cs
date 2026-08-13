@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,7 +12,7 @@ public class RageDirector : MonoBehaviour
     [SerializeField] private float warningTime = 1.5f;
     [SerializeField] private float rageTime = 6f;
 
-    private bool busy; // не накладываем циклы друг на друга
+    private bool busy; // РЅРµ РЅР°РєР»Р°РґС‹РІР°РµРј С†РёРєР»С‹ РґСЂСѓРі РЅР° РґСЂСѓРіР°
 
     private void OnEnable() => ScoreManager.OnDropCollected += OnDrop;
     private void OnDisable() => ScoreManager.OnDropCollected -= OnDrop;
@@ -28,12 +28,12 @@ public class RageDirector : MonoBehaviour
     {
         busy = true;
 
-        // телеграф: предупреждение до ускорения
+        // С‚РµР»РµРіСЂР°С„: РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ РґРѕ СѓСЃРєРѕСЂРµРЅРёСЏ
         warningText.gameObject.SetActive(true);
         yield return new WaitForSeconds(warningTime);
         warningText.gameObject.SetActive(false);
 
-        // ярость
+        // СЏСЂРѕСЃС‚СЊ
         spider.SetRage(true);
         SetVignette(0.12f);
         yield return new WaitForSeconds(rageTime);

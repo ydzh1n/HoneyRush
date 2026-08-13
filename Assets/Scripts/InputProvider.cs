@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class InputProvider : MonoBehaviour
 {
@@ -10,15 +10,15 @@ public class InputProvider : MonoBehaviour
     [SerializeField] private SimpleJoystick joystick;
     [SerializeField] private GameObject joystickCanvas;
 
-    [Header("Гироскоп")]
-    // Чувствительность теперь маленькая: 0.05 означает, что наклон на 20 градусов = полный поворот (20 * 0.05 = 1)
+    [Header("Р“РёСЂРѕСЃРєРѕРї")]
+    // Р§СѓРІСЃС‚РІРёС‚РµР»СЊРЅРѕСЃС‚СЊ С‚РµРїРµСЂСЊ РјР°Р»РµРЅСЊРєР°СЏ: 0.05 РѕР·РЅР°С‡Р°РµС‚, С‡С‚Рѕ РЅР°РєР»РѕРЅ РЅР° 20 РіСЂР°РґСѓСЃРѕРІ = РїРѕР»РЅС‹Р№ РїРѕРІРѕСЂРѕС‚ (20 * 0.05 = 1)
     [SerializeField] private float gyroSensitivity = 0.05f;
     [SerializeField] private bool gyroInvert = false;
-    [SerializeField] private float gyroDeadzone = 3f;      // Мёртвая зона в градусах (не реагируем на дрожь рук)
-    [SerializeField] private float gyroRecenter = 2f;      // Скорость компенсации дрейфа (градусов в секунду)
+    [SerializeField] private float gyroDeadzone = 3f;      // РњС‘СЂС‚РІР°СЏ Р·РѕРЅР° РІ РіСЂР°РґСѓСЃР°С… (РЅРµ СЂРµР°РіРёСЂСѓРµРј РЅР° РґСЂРѕР¶СЊ СЂСѓРє)
+    [SerializeField] private float gyroRecenter = 2f;      // РЎРєРѕСЂРѕСЃС‚СЊ РєРѕРјРїРµРЅСЃР°С†РёРё РґСЂРµР№С„Р° (РіСЂР°РґСѓСЃРѕРІ РІ СЃРµРєСѓРЅРґСѓ)
 
     private bool gyroAvailable;
-    private float currentGyroZero; // Динамический "ноль" для компенсации дрейфа
+    private float currentGyroZero; // Р”РёРЅР°РјРёС‡РµСЃРєРёР№ "РЅРѕР»СЊ" РґР»СЏ РєРѕРјРїРµРЅСЃР°С†РёРё РґСЂРµР№С„Р°
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class InputProvider : MonoBehaviour
         if (gyroAvailable)
         {
             float z = Input.gyro.attitude.eulerAngles.z;
-            if (z > 180f) z -= 360f; // Нормализуем в диапазон -180..180
+            if (z > 180f) z -= 360f; // РќРѕСЂРјР°Р»РёР·СѓРµРј РІ РґРёР°РїР°Р·РѕРЅ -180..180
             currentGyroZero = z;
         }
     }
@@ -58,7 +58,7 @@ public class InputProvider : MonoBehaviour
             case ControlMode.Joystick:
                 if (joystick != null)
                 {
-                    // Квадратичная кривая: смягчает центр, сохраняя полный ход по краям
+                    // РљРІР°РґСЂР°С‚РёС‡РЅР°СЏ РєСЂРёРІР°СЏ: СЃРјСЏРіС‡Р°РµС‚ С†РµРЅС‚СЂ, СЃРѕС…СЂР°РЅСЏСЏ РїРѕР»РЅС‹Р№ С…РѕРґ РїРѕ РєСЂР°СЏРј
                     steer = joystick.AxisX * Mathf.Abs(joystick.AxisX);
                     throttle = joystick.AxisY * Mathf.Abs(joystick.AxisY);
                 }
@@ -68,21 +68,21 @@ public class InputProvider : MonoBehaviour
                 if (gyroAvailable)
                 {
                     float z = Input.gyro.attitude.eulerAngles.z;
-                    if (z > 180f) z -= 360f; // Нормализуем в -180..180
+                    if (z > 180f) z -= 360f; // РќРѕСЂРјР°Р»РёР·СѓРµРј РІ -180..180
 
                     float delta = z - currentGyroZero;
 
                     if (Mathf.Abs(delta) <= gyroDeadzone)
                     {
-                        // Держим ровно: руль в нуле, а "ноль" медленно подтягивается к реальному углу, убирая дрейф
+                        // Р”РµСЂР¶РёРј СЂРѕРІРЅРѕ: СЂСѓР»СЊ РІ РЅСѓР»Рµ, Р° "РЅРѕР»СЊ" РјРµРґР»РµРЅРЅРѕ РїРѕРґС‚СЏРіРёРІР°РµС‚СЃСЏ Рє СЂРµР°Р»СЊРЅРѕРјСѓ СѓРіР»Сѓ, СѓР±РёСЂР°СЏ РґСЂРµР№С„
                         currentGyroZero = Mathf.MoveTowards(currentGyroZero, z, gyroRecenter * Time.unscaledDeltaTime);
                         steer = 0f;
                     }
                     else
                     {
-                        // Осознанный наклон: вычитаем мёртвую зону, чтобы не было рывка на границе
+                        // РћСЃРѕР·РЅР°РЅРЅС‹Р№ РЅР°РєР»РѕРЅ: РІС‹С‡РёС‚Р°РµРј РјС‘СЂС‚РІСѓСЋ Р·РѕРЅСѓ, С‡С‚РѕР±С‹ РЅРµ Р±С‹Р»Рѕ СЂС‹РІРєР° РЅР° РіСЂР°РЅРёС†Рµ
                         float s = (delta - Mathf.Sign(delta) * gyroDeadzone) * gyroSensitivity;
-                        if (gyroInvert) s = -s; // Если телефон инвертирует оси, эта галочка всё исправит
+                        if (gyroInvert) s = -s; // Р•СЃР»Рё С‚РµР»РµС„РѕРЅ РёРЅРІРµСЂС‚РёСЂСѓРµС‚ РѕСЃРё, СЌС‚Р° РіР°Р»РѕС‡РєР° РІСЃС‘ РёСЃРїСЂР°РІРёС‚
                         steer = Mathf.Clamp(s, -1f, 1f);
                     }
                 }

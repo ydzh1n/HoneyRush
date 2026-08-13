@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 
 public class BeeBlink : MonoBehaviour
@@ -21,7 +21,7 @@ public class BeeBlink : MonoBehaviour
     {
         if (GameFlow.GameOver)
         {
-            if (blinkOn) { blinkOn = false; Apply(); } // пчела спрятана в коконе
+            if (blinkOn) { blinkOn = false; Apply(); } // РїС‡РµР»Р° СЃРїСЂСЏС‚Р°РЅР° РІ РєРѕРєРѕРЅРµ
             return;
         }
 
