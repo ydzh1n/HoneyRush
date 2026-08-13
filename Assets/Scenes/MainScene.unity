@@ -3700,9 +3700,9 @@ MonoBehaviour:
   bee: {fileID: 36431049}
   spider: {fileID: 784220984}
   webPrefab: {fileID: 2690333088017722347, guid: 8aaecb0c38b20514ab00e93a5f850fff, type: 3}
-  interval: 26
-  rageInterval: 16
-  lifetime: 25
+  interval: 10
+  rageInterval: 4
+  lifetime: 12
 --- !u!4 &806109038
 Transform:
   m_ObjectHideFlags: 0
