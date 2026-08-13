@@ -4,7 +4,6 @@ public class NectarDrop : MonoBehaviour
 {
     [SerializeField] private float bobHeight = 0.15f;
     [SerializeField] private float bobSpeed = 3f;
-    [SerializeField] private float spinSpeed = 120f;
     [SerializeField] private float lifetime = 25f;
     [SerializeField] private float magnetSpeed = 8f;
 
@@ -17,6 +16,7 @@ public class NectarDrop : MonoBehaviour
         basePos = transform.position;
         phase = Random.Range(0f, Mathf.PI * 2f);
         bee = GameObject.FindGameObjectWithTag("Player").transform;
+        transform.rotation = Quaternion.FromToRotation(Vector3.up, Planet.Instance.UpAt(basePos));
         Destroy(gameObject, lifetime);
     }
 
@@ -31,7 +31,6 @@ public class NectarDrop : MonoBehaviour
         }
 
         transform.position = basePos + up * (Mathf.Sin(Time.time * bobSpeed + phase) * bobHeight);
-        transform.Rotate(up, spinSpeed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
