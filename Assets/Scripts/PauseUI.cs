@@ -7,6 +7,7 @@ public class PauseUI : MonoBehaviour
 
     [SerializeField] private Button pauseButton;
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] private Button menuButton;
 
     public bool IsOpen => pausePanel != null && pausePanel.activeSelf;
 
@@ -14,6 +15,7 @@ public class PauseUI : MonoBehaviour
     {
         Instance = this;
         pauseButton.onClick.AddListener(Pause);
+        menuButton.onClick.AddListener(() => GameRestart.ToMenu());
     }
 
     public void Pause()
