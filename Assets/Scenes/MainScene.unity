@@ -3459,9 +3459,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bee: {fileID: 36431049}
   calmSpeed: 4.5
-  rageSpeed: 7
+  rageSpeed: 5.5
   catchDistance: 1.3
-  knockBack: 3
+  knockBack: 2
   hoverHeight: 0
 --- !u!23 &784220985
 MeshRenderer:

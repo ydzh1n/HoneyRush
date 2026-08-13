@@ -58,8 +58,9 @@ public class InputProvider : MonoBehaviour
             case ControlMode.Joystick:
                 if (joystick != null)
                 {
-                    steer = joystick.AxisX;
-                    throttle = joystick.AxisY;
+                    //  вадратична€ крива€: см€гчает центр, сохран€€ полный ход по кра€м
+                    steer = joystick.AxisX * Mathf.Abs(joystick.AxisX);
+                    throttle = joystick.AxisY * Mathf.Abs(joystick.AxisY);
                 }
                 break;
 
