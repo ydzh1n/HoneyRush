@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private GameObject hudRoot;
+    [SerializeField] private TextMeshProUGUI bestText;
 
     private void Awake()
     {
@@ -20,7 +22,8 @@ public class MainMenu : MonoBehaviour
         }
 
         Time.timeScale = 0f;
-        if (hudRoot != null) hudRoot.SetActive(false); // до старта HUD не существует
+        if (hudRoot != null) hudRoot.SetActive(false);
+        if (bestText != null) bestText.text = $"Рекорд: {PlayerPrefs.GetInt("BestScore", 0)}";
 
         musicSlider.minValue = 0f;
         musicSlider.maxValue = 1f;

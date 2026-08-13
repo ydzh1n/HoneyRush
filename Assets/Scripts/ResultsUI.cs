@@ -10,11 +10,16 @@ public class ResultsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI bestText;
     [SerializeField] private Button restartButton;
+    [SerializeField] private Button menuButton;
 
     private void OnEnable() => GameFlow.OnGameEnded += Show;
     private void OnDisable() => GameFlow.OnGameEnded -= Show;
 
-    private void Awake() => restartButton.onClick.AddListener(Restart);
+    private void Awake()
+    {
+        restartButton.onClick.AddListener(Restart);
+        menuButton.onClick.AddListener(() => GameRestart.ToMenu());
+    }
 
     private void Show()
     {
