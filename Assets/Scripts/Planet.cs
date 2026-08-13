@@ -4,7 +4,7 @@ public class Planet : MonoBehaviour
 {
     public static Planet Instance;
 
-    [SerializeField] private float radius = 10f;
+    [SerializeField] public float radius = 10f;
     public float Radius => radius;
 
     private void Awake() => Instance = this;

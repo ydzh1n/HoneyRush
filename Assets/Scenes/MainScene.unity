@@ -8314,11 +8314,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bee: {fileID: 36431049}
   dropPrefab: {fileID: 8043296918592381371, guid: 83bfdf7875c0d0c44a0b3a6c1d793b80, type: 3}
-  dropsPerChain: 6
-  step: 2
+  dropsPerChain: 5
+  step: 1.5
   lateralRange: 4
-  spawnAhead: 14
+  spawnAhead: 15
   chainInterval: 14
+  dropSpawnDelay: 0.15
 --- !u!4 &1793662111
 Transform:
   m_ObjectHideFlags: 0
