@@ -38,8 +38,20 @@ public class HitFeedback : MonoBehaviour
         if (slowMoLeft > 0f)
         {
             slowMoLeft -= Time.unscaledDeltaTime;
-            if (slowMoLeft <= 0f && !GameFlow.GameOver) // не будим замороженный конец забега
-                Time.timeScale = 1f;
+
+            // Восстанавливаем время только если игра НЕ на паузе и НЕ окончена
+            if (slowMoLeft <= 0f && !GameFlow.GameOver)
+            {
+                bool isPaused = PauseUI.Instance != null && PauseUI.Instance.IsOpen;
+
+                if (!isPaused)
+                {
+                    Time.timeScale = 1f;
+                }
+                // Если игра на паузе, мы ничего не делаем. 
+                // timeScale останется 0, и когда игрок нажмёт "Продолжить", 
+                // метод PauseUI.Resume() сам корректно вернёт timeScale = 1f.
+            }
         }
     }
 }
