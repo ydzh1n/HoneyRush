@@ -12,32 +12,37 @@ public class ControlPicker : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
         keyboardButton.onClick.AddListener(() => Pick(ControlMode.Keyboard));
         joystickButton.onClick.AddListener(() => Pick(ControlMode.Joystick));
         gyroButton.onClick.AddListener(() => Pick(ControlMode.Gyro));
 
-        gameObject.SetActive(false); // ждём вызова Open из меню или Escape
+        // Показываем только то, что реально работает на этой платформе
+        bool isMobile = Application.isMobilePlatform;
+        bool isEditor = Application.isEditor;
+
+        // Клавиатура: только на ПК (и не в редакторе с мобильной платформой)
+        keyboardButton.gameObject.SetActive(!isMobile || isEditor);
+
+        // Гироскоп: только на реальном мобильном устройстве (не в редакторе)
+        gyroButton.gameObject.SetActive(!isEditor && SystemInfo.supportsGyroscope);
+
+        gameObject.SetActive(false);
     }
 
-    public void Open()
+    public void Open() => gameObject.SetActive(true);
+
+    public void Close()
     {
-        gameObject.SetActive(true);
-        Time.timeScale = 0f; // мир замирает, пока игрок выбирает
+        gameObject.SetActive(false);
+        GameFlow.StartGame();
+        Time.timeScale = 1f;
     }
 
     private void Pick(ControlMode mode)
     {
         ControlSettings.Current = mode;
-        PlayerPrefs.Save();
-        if (mode == ControlMode.Gyro && InputProvider.Instance != null)
-            InputProvider.Instance.CalibrateGyro(); // точка нуля = поза в момент выбора
+        ControlSettings.HasChosen = true;
         Close();
-    }
-
-    private void Close()
-    {
-        GameFlow.StartGame();
-        gameObject.SetActive(false);
-        Time.timeScale = 1f;
     }
 }

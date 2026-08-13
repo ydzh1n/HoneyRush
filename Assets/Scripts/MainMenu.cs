@@ -40,6 +40,21 @@ public class MainMenu : MonoBehaviour
     {
         gameObject.SetActive(false);
         if (hudRoot != null) hudRoot.SetActive(true);
+
+        // Защита: если текущий режим недоступен на этой платформе — сбросить
+        if (ControlSettings.HasChosen)
+        {
+            bool isMobile = Application.isMobilePlatform;
+            if (ControlSettings.Current == ControlMode.Keyboard && isMobile)
+            {
+                ControlSettings.Current = ControlMode.Joystick;
+            }
+            else if (ControlSettings.Current == ControlMode.Gyro && !SystemInfo.supportsGyroscope)
+            {
+                ControlSettings.Current = isMobile ? ControlMode.Joystick : ControlMode.Keyboard;
+            }
+        }
+
         if (!ControlSettings.HasChosen && ControlPicker.Instance != null)
         {
             ControlPicker.Instance.Open();
