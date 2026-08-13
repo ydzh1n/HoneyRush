@@ -14,4 +14,9 @@ public static class ShieldState
         Active = false;
         OnChanged?.Invoke(false);
     }
+    public static void Reset() 
+    { 
+        Active = false;
+        OnChanged?.Invoke(false);
+    }
 }

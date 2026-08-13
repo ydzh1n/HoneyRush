@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI counterText;
 
     private int count;
+    public int Count => count;
 
     private void Awake() => Instance = this;
 

@@ -5,4 +5,5 @@ public static class DashState
 
     public static void Start() => Active = true;
     public static void Stop() => Active = false;
+    public static void Reset() => Active = false;
 }

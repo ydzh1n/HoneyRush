@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BeeBlink : MonoBehaviour
@@ -5,20 +6,25 @@ public class BeeBlink : MonoBehaviour
     [SerializeField] private float blinkInterval = 0.12f;
 
     private MeshRenderer[] renderers;
-    private bool[] baseEnabled;
     private float timer;
     private bool blinkOn = true;
 
     private void Awake()
     {
-        renderers = GetComponentsInChildren<MeshRenderer>(true);
-        baseEnabled = new bool[renderers.Length];
-        for (int i = 0; i < renderers.Length; i++)
-            baseEnabled[i] = renderers[i].enabled;
+        var list = new List<MeshRenderer>();
+        foreach (var r in GetComponentsInChildren<MeshRenderer>(true))
+            if (r.enabled && r.gameObject.activeInHierarchy) list.Add(r);
+        renderers = list.ToArray();
     }
 
     private void Update()
     {
+        if (GameFlow.GameOver)
+        {
+            if (blinkOn) { blinkOn = false; Apply(); } // пчела спрятана в коконе
+            return;
+        }
+
         bool inv = HealthSystem.Instance != null && HealthSystem.Instance.IsInvulnerable;
 
         if (inv)
@@ -41,6 +47,6 @@ public class BeeBlink : MonoBehaviour
     private void Apply()
     {
         for (int i = 0; i < renderers.Length; i++)
-            renderers[i].enabled = baseEnabled[i] && blinkOn; // капсула остаётся невидимой
+            renderers[i].enabled = blinkOn;
     }
 }
