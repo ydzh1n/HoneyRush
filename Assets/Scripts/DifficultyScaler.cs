@@ -1,20 +1,20 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class DifficultyScaler : MonoBehaviour
 {
     public static DifficultyScaler Instance;
 
-    [Header("Рост сложности")]
-    [Tooltip("Какие секунды игры считаются одним 'уровнем' сложности")]
+    [Header("Р РѕСЃС‚ СЃР»РѕР¶РЅРѕСЃС‚Рё")]
+    [Tooltip("РљР°РєРёРµ СЃРµРєСѓРЅРґС‹ РёРіСЂС‹ СЃС‡РёС‚Р°СЋС‚СЃСЏ РѕРґРЅРёРј 'СѓСЂРѕРІРЅРµРј' СЃР»РѕР¶РЅРѕСЃС‚Рё")]
     [SerializeField] private float timePerLevel = 15f;
 
-    [Tooltip("На сколько увеличивается сложность за каждый уровень (1.0 = +0%)")]
+    [Tooltip("РќР° СЃРєРѕР»СЊРєРѕ СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ СЃР»РѕР¶РЅРѕСЃС‚СЊ Р·Р° РєР°Р¶РґС‹Р№ СѓСЂРѕРІРµРЅСЊ (1.0 = +0%)")]
     [SerializeField] private float multiplierStep = 0.15f;
 
-    [Tooltip("Максимальный предел сложности (чтобы игра не стала невозможной)")]
+    [Tooltip("РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ РїСЂРµРґРµР» СЃР»РѕР¶РЅРѕСЃС‚Рё (С‡С‚РѕР±С‹ РёРіСЂР° РЅРµ СЃС‚Р°Р»Р° РЅРµРІРѕР·РјРѕР¶РЅРѕР№)")]
     [SerializeField] private float maxMultiplier = 2.0f;
 
-    // Текущий множитель (1.0 в начале, максимум 2.0)
+    // РўРµРєСѓС‰РёР№ РјРЅРѕР¶РёС‚РµР»СЊ (1.0 РІ РЅР°С‡Р°Р»Рµ, РјР°РєСЃРёРјСѓРј 2.0)
     public float Multiplier { get; private set; } = 1f;
 
     private float timer;
@@ -26,7 +26,7 @@ public class DifficultyScaler : MonoBehaviour
 
     private void Update()
     {
-        // Считаем время только во время активного забега
+        // РЎС‡РёС‚Р°РµРј РІСЂРµРјСЏ С‚РѕР»СЊРєРѕ РІРѕ РІСЂРµРјСЏ Р°РєС‚РёРІРЅРѕРіРѕ Р·Р°Р±РµРіР°
         if (!GameFlow.Started || GameFlow.GameOver) return;
 
         timer += Time.deltaTime;
@@ -34,13 +34,13 @@ public class DifficultyScaler : MonoBehaviour
         if (timer >= timePerLevel)
         {
             timer = 0f;
-            // Увеличиваем множитель, но не выше максимума
+            // РЈРІРµР»РёС‡РёРІР°РµРј РјРЅРѕР¶РёС‚РµР»СЊ, РЅРѕ РЅРµ РІС‹С€Рµ РјР°РєСЃРёРјСѓРјР°
             Multiplier = Mathf.Min(Multiplier + multiplierStep, maxMultiplier);
-            Debug.Log($"Сложность возросла! Множитель: {Multiplier:F1}x");
+            Debug.Log($"РЎР»РѕР¶РЅРѕСЃС‚СЊ РІРѕР·СЂРѕСЃР»Р°! РњРЅРѕР¶РёС‚РµР»СЊ: {Multiplier:F1}x");
         }
     }
 
-    // Сброс при новом забеге
+    // РЎР±СЂРѕСЃ РїСЂРё РЅРѕРІРѕРј Р·Р°Р±РµРіРµ
     public void ResetDifficulty()
     {
         Multiplier = 1f;

@@ -11,14 +11,13 @@ public class InputProvider : MonoBehaviour
     [SerializeField] private GameObject joystickCanvas;
 
     [Header("Гироскоп")]
-    // Чувствительность теперь маленькая: 0.05 означает, что наклон на 20 градусов = полный поворот (20 * 0.05 = 1)
-    [SerializeField] private float gyroSensitivity = 0.05f;
+    // Чувствительность для вектора гравитации (диапазон -1..1). 1.2 = чуть резче, 0.8 = плавнее
+    [SerializeField] private float gyroSensitivity = 1.2f;
     [SerializeField] private bool gyroInvert = false;
-    [SerializeField] private float gyroDeadzone = 3f;      // Мёртвая зона в градусах (не реагируем на дрожь рук)
-    [SerializeField] private float gyroRecenter = 2f;      // Скорость компенсации дрейфа (градусов в секунду)
+    // Мёртвая зона для вектора гравитации (0.05 - 0.15). Не в градусах!
+    [SerializeField] private float gyroDeadzone = 0.1f;
 
     private bool gyroAvailable;
-    private float currentGyroZero; // Динамический "ноль" для компенсации дрейфа
 
     private void Awake()
     {
@@ -27,17 +26,6 @@ public class InputProvider : MonoBehaviour
         if (gyroAvailable)
         {
             Input.gyro.enabled = true;
-            CalibrateGyro();
-        }
-    }
-
-    public void CalibrateGyro()
-    {
-        if (gyroAvailable)
-        {
-            float z = Input.gyro.attitude.eulerAngles.z;
-            if (z > 180f) z -= 360f; // Нормализуем в диапазон -180..180
-            currentGyroZero = z;
         }
     }
 
@@ -58,7 +46,6 @@ public class InputProvider : MonoBehaviour
             case ControlMode.Joystick:
                 if (joystick != null)
                 {
-                    // Квадратичная кривая: смягчает центр, сохраняя полный ход по краям
                     steer = joystick.AxisX * Mathf.Abs(joystick.AxisX);
                     throttle = joystick.AxisY * Mathf.Abs(joystick.AxisY);
                 }
@@ -67,22 +54,27 @@ public class InputProvider : MonoBehaviour
             case ControlMode.Gyro:
                 if (gyroAvailable)
                 {
-                    float z = Input.gyro.attitude.eulerAngles.z;
-                    if (z > 180f) z -= 360f; // Нормализуем в -180..180
+                    // В Landscape Left наклон ВЛЕВО-ВПРАВО меняет ось X гравитации, а не Y!
+                    // Когда телефон лежит плоско: gravity.x = 0
+                    // Наклон влево: gravity.x > 0
+                    // Наклон вправо: gravity.x < 0
+                    float rawTilt = -Input.gyro.gravity.x; // Инвертируем для интуитивности
 
-                    float delta = z - currentGyroZero;
-
-                    if (Mathf.Abs(delta) <= gyroDeadzone)
+                    if (Mathf.Abs(rawTilt) <= gyroDeadzone)
                     {
-                        // Держим ровно: руль в нуле, а "ноль" медленно подтягивается к реальному углу, убирая дрейф
-                        currentGyroZero = Mathf.MoveTowards(currentGyroZero, z, gyroRecenter * Time.unscaledDeltaTime);
+                        // Телефон держится ровно: руль в нуле
                         steer = 0f;
                     }
                     else
                     {
-                        // Осознанный наклон: вычитаем мёртвую зону, чтобы не было рывка на границе
-                        float s = (delta - Mathf.Sign(delta) * gyroDeadzone) * gyroSensitivity;
-                        if (gyroInvert) s = -s; // Если телефон инвертирует оси, эта галочка всё исправит
+                        // Осознанный наклон: компенсируем мёртвую зону
+                        float adjustedTilt = rawTilt - Mathf.Sign(rawTilt) * gyroDeadzone;
+                        float maxRange = 1f - gyroDeadzone;
+
+                        // Нормализуем и применяем чувствительность
+                        float s = (adjustedTilt / maxRange) * gyroSensitivity;
+
+                        if (gyroInvert) s = -s;
                         steer = Mathf.Clamp(s, -1f, 1f);
                     }
                 }
@@ -91,6 +83,7 @@ public class InputProvider : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) && PauseUI.Instance != null)
         {
+            if (GameFlow.GameOver) return;
             if (PauseUI.Instance.IsOpen) PauseUI.Instance.Resume();
             else PauseUI.Instance.Pause();
         }
