@@ -20,5 +20,6 @@ public static class GameFlow
     {
         Started = false;
         GameOver = false;
+        if (ScoreManager.Instance != null) ScoreManager.Instance.ResetScore();
     }
 }

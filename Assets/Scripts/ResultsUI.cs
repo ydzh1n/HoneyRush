@@ -25,7 +25,7 @@ public class ResultsUI : MonoBehaviour
     {
         if (cocoon != null) cocoon.SetActive(true);
 
-        int score = ScoreManager.Instance != null ? ScoreManager.Instance.Count : 0;
+        int score = ScoreManager.Instance != null ? ScoreManager.Instance.Score : 0;
         int best = PlayerPrefs.GetInt("BestScore", 0);
         if (score > best)
         {

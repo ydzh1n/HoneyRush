@@ -38,6 +38,7 @@ public class NectarDrop : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (ComboTracker.Instance != null) ComboTracker.Instance.RegisterPickup();
         ScoreManager.Instance.AddDrop();
+
         if (AudioManager.Instance != null) AudioManager.Instance.Pickup();
         Destroy(gameObject);
     }

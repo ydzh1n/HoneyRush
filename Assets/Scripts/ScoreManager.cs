@@ -9,14 +9,51 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI counterText;
 
     private int count;
-    public int Count => count;
+    private int score;
+    private int currentCombo;
 
-    private void Awake() => Instance = this;
+    public int Count => count;
+    public int Score => score;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void OnEnable()
+    {
+        // Подписываемся на статическое событие — Instance не нужен
+        ComboTracker.OnComboChanged += OnComboChanged;
+    }
+
+    private void OnDisable()
+    {
+        ComboTracker.OnComboChanged -= OnComboChanged;
+    }
+
+    private void OnComboChanged(int combo)
+    {
+        currentCombo = combo;
+    }
 
     public void AddDrop()
     {
         count++;
-        counterText.text = count.ToString();
-        OnDropCollected?.Invoke(count);
+
+        // Бонус за комбо: комбо 1-2 = +0, 3-4 = +1, 5-6 = +2, 7-8 = +3
+        int bonus = currentCombo >= 3 ? (currentCombo - 1) / 2 : 0;
+        int points = 1 + bonus;
+
+        score += points;
+        counterText.text = score.ToString();
+        OnDropCollected?.Invoke(score);
+    }
+
+    public void ResetScore()
+    {
+        count = 0;
+        score = 0;
+        currentCombo = 0;
+        counterText.text = "0";
     }
 }
